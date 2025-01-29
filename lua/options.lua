@@ -37,3 +37,5 @@ vim.opt.jumpoptions = "stack"
 vim.opt.sidescrolloff = 7
 
 vim.opt.listchars = {}
+
+--fzf-lua setup

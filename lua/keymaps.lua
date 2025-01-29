@@ -5,6 +5,7 @@ wk.add({
                 {"<Down>", "<cmd> echo 'Stop being dumb yo'<cr>", hidden = true},
                 {"<Left>", "<cmd> echo 'Stop being dumb yo'<cr>", hidden = true},
                 {"<Right>", "<cmd> echo 'Stop being dumb yo'<cr>", hidden = true},
+                {"<C-L>", "<cmd> noh <cr>", hidden = true, silent = true},
         },
         {
                 mode = { "n", "v", }, -- NORMAL and VISUAL mode
@@ -25,8 +26,12 @@ do
                 {
                         { "<leader>f", group = "Find..." },
                         { "<leader>ff", function() fzf.files() end, desc = "Find files" },
-                        { "<leader>fw", function() fzf.live_grep() end, desc = "Find word" },
+                        { "<leader>fw", function() fzf.lgrep_curbuf() end, desc = "Find word in current buffer" },
+                        { "<leader>fl", function() fzf.live_grep() end, desc = "Live grep current project" },
                         { "<leader>fb", function() fzf.buffers() end, desc = "Find buffers" },
+                        { "<leader>fc", function() fzf.files({cwd = '~/.config/nvim'}) end, desc = "Find in config files" },
+                        { "<leader>fF", function() fzf.files({cwd='~'}) end, desc = "Search files from user home" },
+                        { "<leader>fA", function() fzf.files({cwd='/'}) end, desc = "Search all files" },
 
                 },
                 {
@@ -48,6 +53,8 @@ do
                         { "<leader>cdD",function() fzf.diagnostics_workspace() end, group = "[d]iagnostics", desc = "Workspace [d]iagnostics"},
                 },
         })
+        vim.keymap.set('n', '<C-f>', function() fzf.lgrep_curbuf() end, {desc = "Search current buffer for file"})
+        vim.keymap.set('n', '<C-g>', function() fzf.live_grep() end, {desc="Live grep current project"})
 end
 
 -- Gitsigns keybinds
@@ -88,6 +95,31 @@ do
                 }
         })
 end
+
+-- CMP keybinds
+
+-- Harpoon2 keybinds
+-- do 
+--         local harpoon = require("harpoon")
+--         -- Apparently required?
+--         harpoon:setup()
+--
+--         wk.add({
+--                 {
+--                         mode = {"n"},
+--                         { "<leader>a", function() harpoon:list:add() end, desc = "Add to harpoon list" },
+--                         { "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, desc="Toggle harpoon quick menu" },
+--                         { "<C-h>", function() harpoon:list:select(1) end, desc = "Select 1st harpoon list entry" },
+--                         { "<C-t>", function() harpoon:list:select(2) end, desc = "Select 2nd harpoon list entry" },
+--                         { "<C-n>", function() harpoon:list:select(3) end, desc = "Select 3rd harpoon list entry" },
+--                         { "<C-s>", function() harpoon:list:select(4) end, desc = "Select 4th harpoon list entry" },
+--                         { "<C-S-P>", function() harpoon:list:prev() end, desc = "Harpoon: previous entry" },
+--                         { "<C-S-N>", function() harpoon:list:next() end, desc = "Harpoon: next entry" },
+--                 }
+--         })
+--
+--
+-- end
 
 -- UI keybinds
 
